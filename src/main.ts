@@ -2,7 +2,7 @@ import 'zone.js/dist/zone';
 import { Component, OnInit, VERSION } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { bootstrapApplication } from '@angular/platform-browser';
-import { of, from } from 'rxjs';
+import { of, from, map, tap, take } from 'rxjs';
 
 @Component({
   selector: 'my-app',
@@ -24,6 +24,21 @@ export class App implements OnInit {
       error: (err) => console.log(err),
       complete: () => console.log('complete'),
     });
+
+    of(2, 4, 6, 8)
+      .pipe(
+        map((item) => item * 3),
+        tap((item) => console.log(item)),
+        take(4)
+      )
+      .subscribe();
+
+      of(1, 2, 3, 4)
+      .pipe(
+        tap((item) => item * 3),
+        take(4)
+      )
+      .subscribe(item => console.log(item));
   }
 }
 
